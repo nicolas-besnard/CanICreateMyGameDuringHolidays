@@ -42,7 +42,7 @@ void				Context::init(int width, int height)
     throw ContextException(__FILE__, __LINE__, "Can't install mouse.");
   if (!(this->eventQueue_ = al_create_event_queue()))
     throw ContextException(__FILE__, __LINE__, "Can't create event queue.");
-  if (!(this->timer_ = al_create_timer(1.0 / 60)))
+  if (!(this->timer_ = al_create_timer(1.0 / 300)))
     throw ContextException(__FILE__, __LINE__, "Can't create timer.");
   if (!al_install_joystick())
     throw ContextException(__FILE__, __LINE__, "Can't install joystick.");
@@ -55,6 +55,10 @@ void				Context::init(int width, int height)
 
 void				Context::loop()
 {
+  static double fps = 0;
+  static double frames_done = 0;
+  static double old_time = al_get_time();
+
   isRunning_->set(true);
   while (isRunning_->get())
     {
@@ -65,6 +69,15 @@ void				Context::loop()
       notifyNewEvent(ev);
       if (canDraw_->get() && al_is_event_queue_empty(eventQueue_))
 	{
+	  double time = al_get_time();
+	  if(time - old_time >= 1.0)
+	    {
+	      fps = frames_done / (time - old_time);
+	      frames_done = 0;
+	      old_time = time;
+	      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
+	    }
+	  frames_done++;
 	  al_clear_to_color(al_map_rgb(0, 0, 0));
 	  al_draw_rectangle(10, 10, 20, 20, al_map_rgb(255, 0, 0), 10);
 	  al_flip_display();
