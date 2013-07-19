@@ -2,7 +2,14 @@
 
 // CTOR - DTOR
 
-Context::Context() {}
+Context::Context()
+{
+  OptionManager::getInstance().add<bool>("isRunning", false);
+  OptionManager::getInstance().add<bool>("canDraw", false);
+
+  isRunning_ = OptionManager::getInstance().get<bool>("isRunning");
+  canDraw_= OptionManager::getInstance().get<bool>("canDraw");
+}
 
 Context::~Context()
 {
@@ -48,34 +55,40 @@ void				Context::init(int width, int height)
 
 void				Context::loop()
 {
-  bool				canDraw;
-
-  isRunning_ = true;
-  while (isRunning_)
+  isRunning_->set(true);
+  while (isRunning_->get())
     {
       ALLEGRO_EVENT		ev;
-      canDraw = false;
+      canDraw_->set(false);
 
       al_wait_for_event(eventQueue_, &ev);
-      if (ev.type == ALLEGRO_EVENT_TIMER)
-	{
-	  canDraw = true;
-	  //logic
-	}
-      else if (ev.type == ALLEGRO_EVENT_KEY_CHAR)
-	{
-	  if ((ev.keyboard.keycode = ALLEGRO_KEY_ESCAPE))
-	    {
-	      isRunning_ = false;
-	    }
-	}
-      if (canDraw && al_is_event_queue_empty(eventQueue_))
+      notifyNewEvent(ev);
+      if (canDraw_->get() && al_is_event_queue_empty(eventQueue_))
 	{
 	  al_clear_to_color(al_map_rgb(0, 0, 0));
 	  al_draw_rectangle(10, 10, 20, 20, al_map_rgb(255, 0, 0), 10);
 	  al_flip_display();
 	}
-      if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-	isRunning_ = false;
+    }
+}
+
+
+void				Context::addEventListener(AObserver &observer)
+{
+  ObserverVectorIT			it = find(eventListener_.begin(), eventListener_.end(), &observer);
+  if (it != eventListener_.end())
+    return ;
+  eventListener_.push_back(&observer);
+}
+
+// PRIVATE METHODS
+
+void				Context::notifyNewEvent(ALLEGRO_EVENT &event) const
+{
+  ObserverVectorConstIT		actualObserver = eventListener_.begin();
+
+  for (; actualObserver != eventListener_.end(); actualObserver++)
+    {
+      (*actualObserver)->notify(event);
     }
 }

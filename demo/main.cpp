@@ -8,6 +8,8 @@
 #include			"ImageLoader.hpp"
 #include			"Image.hh"
 #include			"FontManager.hh"
+#include			"EventManager.hh"
+#include			"OptionManager.hpp"
 
 int				main(void)
 {
@@ -27,6 +29,7 @@ int				main(void)
   //     exit (0);
   //   }
   FontManager::getInstance().addSearchPath("./assets/fonts/");
+  context.addEventListener(EventManager::getInstance());
   try
     {
       context.init(800, 600);

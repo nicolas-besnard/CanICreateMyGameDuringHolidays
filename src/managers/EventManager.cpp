@@ -1,0 +1,40 @@
+#include			"EventManager.hh"
+
+// CTOR - DTOR
+
+EventManager::EventManager(void) {}
+
+EventManager::~EventManager() {}
+
+// PUBLIC METHODS
+
+void				EventManager::notify(ALLEGRO_EVENT &ev)
+{
+  static double fps = 0;
+  static double frames_done = 0;
+  static double old_time = (al_get_time());
+  double time = al_get_time();
+  if(time - old_time >= 1.0)
+    {
+      fps = frames_done / (time - old_time);
+      frames_done = 0;
+      old_time = time;
+      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
+    }
+  frames_done++;
+
+  if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+    {
+      if ((ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE))
+	{
+	  OptionManager::getInstance().get<bool>("isRunning")->set(false);
+	}
+    }
+  if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+    OptionManager::getInstance().get<bool>("isRunning")->set(false);
+  if (ev.type == ALLEGRO_EVENT_TIMER)
+    {
+      OptionManager::getInstance().get<bool>("canDraw")->set(true);
+      //logic
+    }
+}
