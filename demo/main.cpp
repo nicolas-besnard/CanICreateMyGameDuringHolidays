@@ -1,4 +1,5 @@
 #include			<iostream>
+
 #include			"Context.hh"
 #include			"ALogger.hh"
 #include			"LoggerConsole.hh"
@@ -10,9 +11,11 @@
 #include			"FontManager.hh"
 #include			"EventManager.hh"
 #include			"OptionManager.hpp"
+#include			"Player.hh"
 
 int				main(void)
 {
+  srand(time(NULL));
   ALogger::setLogger(new LoggerConsole);
   Context			&context = Context::getInstance();
 
@@ -29,7 +32,13 @@ int				main(void)
   //     exit (0);
   //   }
   FontManager::getInstance().addSearchPath("./assets/fonts/");
+
+  Player		*player = new Player();
+
   context.addEventListener(EventManager::getInstance());
+  context.addEventListener(*player);
+
+  context.addEntity(*player);
   try
     {
       context.init(800, 600);

@@ -66,7 +66,7 @@ void				Context::loop()
       canDraw_->set(false);
 
       al_wait_for_event(eventQueue_, &ev);
-      notifyNewEvent(ev);
+      notifyNewEvent_(ev);
       if (canDraw_->get() && al_is_event_queue_empty(eventQueue_))
 	{
 	  // FPS COUNT
@@ -81,8 +81,7 @@ void				Context::loop()
 	  frames_done++;
 
 
-
-	  al_draw_rectangle(10, 10, 20, 20, al_map_rgb(255, 0, 0), 10);
+	  drawEntity();
 	  al_flip_display();
 	  al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -99,9 +98,45 @@ void				Context::addEventListener(AObserver &observer)
   eventListener_.push_back(&observer);
 }
 
+void				Context::addEntity(AEntity &entity)
+{
+  entityCollection_.push_back(&entity);
+}
+
+void				Context::removeEntity(AEntity &entity)
+{
+  EntityVectorIT		elem = find(entityCollection_.begin(),
+					    entityCollection_.end(),
+					    &(entity));
+  if (elem != entityCollection_.end())
+    {
+      entityCollection_.erase(elem);
+    }
+  else
+    std::cout << "CANT FIND ELEM" << std::endl;
+}
+
+void				Context::drawEntity(void) const
+{
+  EntityVectorConstIT		actualEntity = entityCollection_.begin();
+  EntityVectorConstIT		lastEntity = entityCollection_.end();
+
+  for (; actualEntity != lastEntity; ++actualEntity)
+    (*actualEntity)->draw();
+}
+
+void				Context::updateEntity(void) const
+{
+  EntityVectorConstIT		actualEntity = entityCollection_.begin();
+  EntityVectorConstIT		lastEntity = entityCollection_.end();
+
+  for (; actualEntity != lastEntity; ++actualEntity)
+    (*actualEntity)->update();
+}
+
 // PRIVATE METHODS
 
-void				Context::notifyNewEvent(ALLEGRO_EVENT &event) const
+void				Context::notifyNewEvent_(ALLEGRO_EVENT &event) const
 {
   ObserverVectorConstIT		actualObserver = eventListener_.begin();
 
