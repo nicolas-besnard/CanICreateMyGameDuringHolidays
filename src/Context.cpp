@@ -69,6 +69,7 @@ void				Context::loop()
       notifyNewEvent(ev);
       if (canDraw_->get() && al_is_event_queue_empty(eventQueue_))
 	{
+	  // FPS COUNT
 	  double time = al_get_time();
 	  if(time - old_time >= 1.0)
 	    {
@@ -78,9 +79,13 @@ void				Context::loop()
 	      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
 	    }
 	  frames_done++;
-	  al_clear_to_color(al_map_rgb(0, 0, 0));
+
+
+
 	  al_draw_rectangle(10, 10, 20, 20, al_map_rgb(255, 0, 0), 10);
 	  al_flip_display();
+	  al_clear_to_color(al_map_rgb(0, 0, 0));
+
 	}
     }
 }
