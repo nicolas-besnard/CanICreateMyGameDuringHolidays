@@ -1,21 +1,31 @@
-#ifndef				COMPONENTMANAGER_HH_
-# define			COMPONENTMANAGER_HH_
+#ifndef					COMPONENTMANAGER_HH_
+# define				COMPONENTMANAGER_HH_
 
-# include			"Singleton.hpp"
+# include				<map>
 
-class				ComponentManager : public Singleton<ComponentManager>
+# include				"Singleton.hpp"
+
+class					ComponentManager : public Singleton<ComponentManager>
 {
   friend class Singleton<ComponentManager>;
 
+  typedef std::map<std::string, Component *>
 public:
-  ComponentManager(void);
-  ~ComponentManager();
+  template				<typename T>
+  void					registerComponent(void)
+  {
+
+  }
 
 protected:
 
 private:
+  ComponentManager(void);
+  ~ComponentManager();
   ComponentManager 			&operator=(const ComponentManager &other);
   ComponentManager(const ComponentManager &other);
+
+
 };
 
-#endif				/* !COMPONENTMANAGER_HH_ */
+#endif					/* !COMPONENTMANAGER_HH_ */

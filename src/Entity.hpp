@@ -13,6 +13,7 @@ public:
   Entity(unsigned int id)
     : id_(id)
   {}
+
   ~Entity() {}
 
   void					addComponent(Component &component)
@@ -20,6 +21,7 @@ public:
     componentCollection_.push_back(&component);
   }
 
+  unsigned int				getId(void) const { return id_; }
 protected:
 
 private:

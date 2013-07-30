@@ -13,11 +13,15 @@
 
 #include			"EntityManager.hh"
 
+#include			"components/Position.hh"
+
+#include			"systems/PositionSystem.hpp"
+
 int				main(void)
 {
-  srand(time(NULL));
-  ALogger::setLogger(new LoggerConsole);
-  Context			&context = Context::getInstance();
+  // srand(time(NULL));
+  // ALogger::setLogger(new LoggerConsole);
+  // Context			&context = Context::getInstance();
 
   // MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png");
   // MediaManager::getInstance().addSearchPath("./assets/images/");
@@ -31,12 +35,21 @@ int				main(void)
   //     ALogger::log(e.what());
   //     exit (0);
   //   }
+  Context			&context = Context::getInstance();
   FontManager::getInstance().addSearchPath("./assets/fonts/");
 
   context.addEventListener(EventManager::getInstance());
 
   Entity			&entity = EntityManager::getInstance().getNewEntity();
+  Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
+  p.x = 5;
+  p.y = 5;
+  // EntityManager::getInstance().addComponent<Position>(entity);
+
   (void)(entity);
+
+  PositionSystem		ps;
+  ps.update();
 
   try
     {
