@@ -24,12 +24,5 @@ void				EventManager::notify(ALLEGRO_EVENT &ev)
   if (ev.type == ALLEGRO_EVENT_TIMER)
     {
       OptionManager::getInstance().get<bool>("canDraw")->set(true);
-      if (rand() % 200 == 0)
-	{
-	  Comet			*comet = new Comet();
-
-	  Context::getInstance().addEntity(*comet);
-	}
-      Context::getInstance().updateEntity();
     }
 }

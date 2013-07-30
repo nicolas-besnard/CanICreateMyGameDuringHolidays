@@ -10,8 +10,6 @@
 # include			"OptionManager.hpp"
 # include			"Context.hh"
 
-# include			"Comet.hh"
-
 class				EventManager :
   public Singleton<EventManager>,
   public AObserver

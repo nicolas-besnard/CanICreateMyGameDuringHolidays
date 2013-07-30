@@ -81,7 +81,6 @@ void				Context::loop()
 	  frames_done++;
 
 
-	  drawEntity();
 	  al_flip_display();
 	  al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -96,42 +95,6 @@ void				Context::addEventListener(AObserver &observer)
   if (it != eventListener_.end())
     return ;
   eventListener_.push_back(&observer);
-}
-
-void				Context::addEntity(AEntity &entity)
-{
-  entityCollection_.push_back(&entity);
-}
-
-void				Context::removeEntity(AEntity &entity)
-{
-  EntityVectorIT		elem = find(entityCollection_.begin(),
-					    entityCollection_.end(),
-					    &(entity));
-  if (elem != entityCollection_.end())
-    {
-      entityCollection_.erase(elem);
-    }
-  else
-    std::cout << "CANT FIND ELEM" << std::endl;
-}
-
-void				Context::drawEntity(void) const
-{
-  EntityVectorConstIT		actualEntity = entityCollection_.begin();
-  EntityVectorConstIT		lastEntity = entityCollection_.end();
-
-  for (; actualEntity != lastEntity; ++actualEntity)
-    (*actualEntity)->draw();
-}
-
-void				Context::updateEntity(void) const
-{
-  EntityVectorConstIT		actualEntity = entityCollection_.begin();
-  EntityVectorConstIT		lastEntity = entityCollection_.end();
-
-  for (; actualEntity != lastEntity; ++actualEntity)
-    (*actualEntity)->update();
 }
 
 // PRIVATE METHODS
