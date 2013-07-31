@@ -37,10 +37,8 @@ public:
 	for (; actualEntity != lastEntity; ++actualEntity)
 	  {
 	    Position			&p = EntityManager::getInstance().getComponent<Position>(*(*actualEntity));
-	    al_draw_filled_rectangle(p.x, p.y - 9, p.x + 10, p.y - 7, al_map_rgb(255, 0, 0));
-	    al_draw_filled_rectangle(p.x, p.y + 9, p.x + 10, p.y + 7, al_map_rgb(255, 0, 0));
-	    al_draw_filled_triangle(p.x - 12, p.y - 17, p.x + 12, p.y, p.x - 12, p.y + 17, al_map_rgb(0, 255, 0));
-	    al_draw_filled_rectangle(p.x - 12, p.y - 2, p.x + 15, p.y + 2, al_map_rgb(0, 0, 255));
+	    Ship			&s = EntityManager::getInstance().getComponent<Ship>(*(*actualEntity));
+	    al_draw_filled_rectangle(p.x, p.y, p.x + s.size, p.y + s.size, al_map_rgb(255, 0, 0));
 	  }
       }
 

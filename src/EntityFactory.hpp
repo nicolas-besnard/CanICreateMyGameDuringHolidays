@@ -7,6 +7,7 @@
 
 # include				"components/ShipComponent.hpp"
 # include				"components/PositionComponent.hpp"
+# include				"components/BoundingBoxComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
@@ -17,10 +18,16 @@ public:
   {
     Entity				&entity = EntityManager::getInstance().getNewEntity();
 
-    EntityManager::getInstance().addComponent<Ship>(entity);
+    Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
+    s.size = 50;
+
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
     p.x = 200;
     p.y = 200;
+
+    BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
+    bb.sizeX = 50;
+    bb.sizeY = 50;
 
     return				entity;
   }

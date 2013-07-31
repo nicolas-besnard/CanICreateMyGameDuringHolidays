@@ -11,6 +11,7 @@
 # include				"SystemManager.hpp"
 
 # include				"systems/ShipSystem.hpp"
+# include				"systems/BoundingBoxSystem.hpp"
 # include				"EntityFactory.hpp"
 
 class					EventManager : public Singleton<EventManager>

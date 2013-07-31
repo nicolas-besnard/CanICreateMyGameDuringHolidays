@@ -16,10 +16,12 @@
 #include			"components/PositionComponent.hpp"
 #include			"components/ShipComponent.hpp"
 #include			"components/InputMovementComponent.hpp"
+#include			"components/BoundingBoxComponent.hpp"
 
 #include			"systems/ShipSystem.hpp"
 #include			"systems/InputSystem.hpp"
 #include			"systems/InputMovementSystem.hpp"
+#include			"systems/BoundingBoxSystem.hpp"
 
 #include			"managers/SystemManager.hpp"
 
@@ -45,7 +47,12 @@ int				main(void)
   // FontManager::getInstance().addSearchPath("./assets/fonts/");
 
   Entity&entity = EntityManager::getInstance().getNewEntity();
-  EntityManager::getInstance().addComponent<Ship>(entity);
+  Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
+  s.size = 50;
+
+  BoundingBox			&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
+  bb.sizeX = s.size;
+  bb.sizeY = s.size;
 
   InputMovement			&m = EntityManager::getInstance().addComponent<InputMovement>(entity);
   m.keyUp = ALLEGRO_KEY_Z;
@@ -54,12 +61,13 @@ int				main(void)
   m.keyRight = ALLEGRO_KEY_D;
 
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
-  p.x = 20;
-  p.y = 20;
+  p.x = 0;
+  p.y = 0;
 
   SystemManager::getInstance().addSystem<ShipSystem>();
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
+  SystemManager::getInstance().addSystem<BoundingBoxSystem>();
 
   try
     {

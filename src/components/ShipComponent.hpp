@@ -5,7 +5,7 @@
 
 struct					Ship : public Component::Base
 {
-
+  int					size;
 };
 
 #endif					/* !SHIPCOMPONENT_HPP_ */
