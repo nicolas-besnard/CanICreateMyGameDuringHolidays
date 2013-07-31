@@ -3,17 +3,17 @@
 
 # include				<allegro5/allegro.h>
 
-# include				"System.hpp"
+# include				"systems/Base.hpp"
 # include				"EntityManager.hh"
 
 # include				"components/ShipComponent.hpp"
 # include				"components/PositionComponent.hpp"
 
-class					ShipSystem : public System
+class					ShipSystem : public System::Base
 {
 public:
   ShipSystem(void)
-    : System()
+    : System::Base()
   {}
 
   virtual ~ShipSystem()

@@ -3,9 +3,9 @@
 
 # include				<map>
 
-# include				"System.hpp"
+# include				"systems/Base.hpp"
 
-class					InputSystem : public System
+class					InputSystem : public System::Base
 {
   typedef std::map<int, bool>		ActiveKeyMap;
   typedef ActiveKeyMap::iterator	ActiveKeyMapIT;
@@ -14,7 +14,7 @@ class					InputSystem : public System
 
 public:
   InputSystem(void)
-    : System()
+    : System::Base()
   {}
 
   virtual ~InputSystem()

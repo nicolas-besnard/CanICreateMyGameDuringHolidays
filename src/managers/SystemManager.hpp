@@ -5,14 +5,14 @@
 # include				<allegro5/allegro.h>
 
 # include				"Singleton.hpp"
-# include				"systems/System.hpp"
+# include				"systems/Base.hpp"
 
 class					SystemManager : public Singleton<SystemManager>
 {
   friend class Singleton<SystemManager>;
-  typedef std::map<const char *, System *>	MapSystem;
-  typedef MapSystem::iterator			MapSystemIT;
-  typedef std::pair<const char *, System *>	MapSystemPair;
+  typedef std::map<const char *, System::Base *>	MapSystem;
+  typedef MapSystem::iterator				MapSystemIT;
+  typedef std::pair<const char *, System::Base *>	MapSystemPair;
 
 public:
   template				<typename T>

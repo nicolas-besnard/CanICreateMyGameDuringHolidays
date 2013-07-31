@@ -5,7 +5,10 @@
 
 struct					InputMovement : public Component::Base
 {
-
+  int					keyUp;
+  int					keyDown;
+  int					keyLeft;
+  int					keyRight;
 };
 
 #endif					/* !INPUTMOVEMENTCOMPONENT_HPP_ */
