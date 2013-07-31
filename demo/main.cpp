@@ -42,7 +42,7 @@ int				main(void)
   //     exit (0);
   //   }
   Context&context = Context::getInstance();
-  FontManager::getInstance().addSearchPath("./assets/fonts/");
+  // FontManager::getInstance().addSearchPath("./assets/fonts/");
 
   Entity&entity = EntityManager::getInstance().getNewEntity();
   EntityManager::getInstance().addComponent<Ship>(entity);
@@ -60,22 +60,23 @@ int				main(void)
   SystemManager::getInstance().addSystem<ShipSystem>();
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
-    try
-      {
-	context.init(800, 600);
-	EventManager::getInstance().init();
-	FontManager::getInstance().initAddon();
-	FontManager::getInstance().get("comics.ttf", 24);
-	EventManager::getInstance().loop();
-      }
-    catch (ContextException &e)
-      {
-	ALogger::log(e.what());
-      }
-    catch (LoadingFailed &e)
-      {
-	ALogger::log(e.what());
-	exit(0);
-      }
-    return (0);
+
+  try
+    {
+      context.init(800, 600);
+      EventManager::getInstance().init();
+      // FontManager::getInstance().initAddon();
+      // FontManager::getInstance().get("comics.ttf", 24);
+      EventManager::getInstance().loop();
+    }
+  catch (ContextException &e)
+    {
+      ALogger::log(e.what());
+    }
+  catch (LoadingFailed &e)
+    {
+      ALogger::log(e.what());
+      exit(0);
+    }
+  return (0);
 }
