@@ -1,0 +1,56 @@
+#ifndef					SHIPSYSTEM_HPP_
+# define				SHIPSYSTEM_HPP_
+
+# include				<allegro5/allegro.h>
+
+# include				"System.hpp"
+# include				"EntityManager.hh"
+
+# include				"components/ShipComponent.hpp"
+# include				"components/PositionComponent.hpp"
+
+class					ShipSystem : public System
+{
+public:
+  ShipSystem(void)
+    : System()
+  {}
+
+  virtual ~ShipSystem()
+  {}
+
+  virtual void				update(const ALLEGRO_EVENT &)
+  {}
+
+  virtual void				init(void)
+  {}
+
+  void					draw(void) const
+  {
+    EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Ship>();
+
+    if (entities)
+      {
+	EntityManager::VectorEntityIT	actualEntity = entities->begin();
+	EntityManager::VectorEntityIT	lastEntity = entities->end();
+
+	for (; actualEntity != lastEntity; ++actualEntity)
+	  {
+	    Position			&p = EntityManager::getInstance().getComponent<Position>(*(*actualEntity));
+	    al_draw_filled_rectangle(p.x, p.y - 9, p.x + 10, p.y - 7, al_map_rgb(255, 0, 0));
+	    al_draw_filled_rectangle(p.x, p.y + 9, p.x + 10, p.y + 7, al_map_rgb(255, 0, 0));
+	    al_draw_filled_triangle(p.x - 12, p.y - 17, p.x + 12, p.y, p.x - 12, p.y + 17, al_map_rgb(0, 255, 0));
+	    al_draw_filled_rectangle(p.x - 12, p.y - 2, p.x + 15, p.y + 2, al_map_rgb(0, 0, 255));
+	  }
+      }
+
+  }
+
+protected:
+
+private:
+  ShipSystem					&operator=(const ShipSystem &other);
+  ShipSystem(const ShipSystem &other);
+};
+
+#endif					/* !SHIPSYSTEM_HPP_ */

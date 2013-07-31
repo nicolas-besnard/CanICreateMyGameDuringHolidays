@@ -6,14 +6,14 @@
 
 # include				"Singleton.hpp"
 # include				"Entity.hpp"
-# include				"Component.hh"
+# include				"components/Base.hpp"
 
 class					EntityManager : public Singleton<EntityManager>
 {
   friend class Singleton<EntityManager>;
 
-  typedef std::map<Entity *, Component *>	MapEntity;
-  typedef std::pair<Entity *, Component *>	MapEntityPair;
+  typedef std::map<Entity *, Component::Base *>	MapEntity;
+  typedef std::pair<Entity *, Component::Base *>MapEntityPair;
   typedef MapEntity::iterator			MapEntityIT;
 
   typedef std::map<const char *, MapEntity>	MapComponentName;

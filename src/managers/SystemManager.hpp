@@ -25,7 +25,21 @@ public:
       {
 	T				*system = new T;
 	systems_.insert(MapSystemPair(systemName, system));
+	system->init();
       }
+  }
+
+  template				<typename T>
+  T					*getSystem(void)
+  {
+    const char				*systemName = typeid(T).name();
+    MapSystemIT				find = systems_.find(systemName);
+
+    if (find != systems_.end())
+      {
+	return (T *)((*find).second);
+      }
+    return NULL;
   }
 
   void					update(const ALLEGRO_EVENT &event)

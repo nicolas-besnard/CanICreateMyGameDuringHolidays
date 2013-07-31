@@ -1,11 +1,11 @@
 #ifndef					ENTITY_HPP_
 # define				ENTITY_HPP_
 
-# include				"Component.hh"
+# include				"components/Base.hpp"
 
 class					Entity
 {
-  typedef std::vector<Component *>	ComponentVector;
+  typedef std::vector<Component::Base *>	ComponentVector;
   typedef ComponentVector::iterator	ComponentVectorIT;
   typedef ComponentVector::const_iterator	ComponentVectorConstIT;
 
@@ -16,7 +16,7 @@ public:
 
   ~Entity() {}
 
-  void					addComponent(Component &component)
+  void					addComponent(Component::Base &component)
   {
     componentCollection_.push_back(&component);
   }

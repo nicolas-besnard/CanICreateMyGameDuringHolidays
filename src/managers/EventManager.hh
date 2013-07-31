@@ -1,30 +1,43 @@
-#ifndef				EVENTMANAGER_HH_
-# define			EVENTMANAGER_HH_
+#ifndef					EVENTMANAGER_HH_
+# define				EVENTMANAGER_HH_
 
-# include			<allegro5/allegro.h>
+# include				<allegro5/allegro.h>
+# include				<iostream>
 
-#include			<iostream>
+# include				"Singleton.hpp"
+# include				"AObserver.hh"
+# include				"OptionManager.hpp"
+# include				"Context.hh"
+# include				"SystemManager.hpp"
 
-# include			"Singleton.hpp"
-# include			"AObserver.hh"
-# include			"OptionManager.hpp"
-# include			"Context.hh"
-# include			"SystemManager.hpp"
+# include				"systems/ShipSystem.hpp"
 
-class				EventManager :
-  public Singleton<EventManager>,
-  public AObserver
+class					EventManager : public Singleton<EventManager>
 {
-public:
-  EventManager(void);
-  virtual ~EventManager();
+  friend class Singleton<EventManager>;
 
-  virtual void			notify(ALLEGRO_EVENT &event);
+  // typedef std::vector<AObserver *>		ObserverVector;
+  // typedef ObserverVector::iterator		ObserverVectorIT;
+  // typedef ObserverVector::const_iterator	ObserverVectorConstIT;
+
+public:
+  void					init(void);
+  void					loop(void);
+  // void					addEventListener(AObserver &observer)
 protected:
 
 private:
-  EventManager 			&operator=(const EventManager &other);
+  EventManager(void);
+  virtual ~EventManager();
+  EventManager				&operator=(const EventManager &other);
   EventManager(const EventManager &other);
+
+  // void					notifyNewEvent_(ALLEGRO_EVENT &event) const
+
+  bool					isRunning_;
+  bool					canDraw_;
+  ALLEGRO_EVENT_QUEUE			*eventQueue_;
+  ALLEGRO_TIMER				*timer_;
 };
 
-#endif				/* !EVENTMANAGER_HH_ */
+#endif					/* !EVENTMANAGER_HH_ */

@@ -13,9 +13,12 @@
 
 #include			"EntityManager.hh"
 
-#include			"components/Position.hh"
+#include			"components/PositionComponent.hpp"
+#include			"components/ShipComponent.hpp"
 
-#include			"systems/PositionSystem.hpp"
+#include			"systems/ShipSystem.hpp"
+#include			"systems/InputSystem.hpp"
+
 #include			"managers/SystemManager.hpp"
 
 int				main(void)
@@ -39,22 +42,21 @@ int				main(void)
   Context			&context = Context::getInstance();
   FontManager::getInstance().addSearchPath("./assets/fonts/");
 
-  context.addEventListener(EventManager::getInstance());
-
   Entity			&entity = EntityManager::getInstance().getNewEntity();
+  EntityManager::getInstance().addComponent<Ship>(entity);
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
-  p.x = 5;
-  p.y = 5;
+  p.x = 20;
+  p.y = 20;
 
-  SystemManager::getInstance().addSystem<PositionSystem>();
-  (void)(entity);
-
+  SystemManager::getInstance().addSystem<ShipSystem>();
+  SystemManager::getInstance().addSystem<InputSystem>();
   try
     {
       context.init(800, 600);
+      EventManager::getInstance().init();
       FontManager::getInstance().initAddon();
       FontManager::getInstance().get("comics.ttf", 24);
-      context.loop();
+      EventManager::getInstance().loop();
     }
   catch (ContextException &e)
     {

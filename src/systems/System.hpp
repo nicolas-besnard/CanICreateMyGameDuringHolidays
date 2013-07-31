@@ -6,6 +6,7 @@
 struct					System
 {
   virtual void				update(const ALLEGRO_EVENT &event) = 0;
+  virtual void				init(void) = 0;
 };
 
 #endif					/* !SYSTEM_HPP_ */
