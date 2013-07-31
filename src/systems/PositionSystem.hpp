@@ -14,7 +14,7 @@ public:
   virtual ~PositionSystem()
   {}
 
-  virtual void				update(void)
+  virtual void				update(const ALLEGRO_EVENT &)
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Position>();
 

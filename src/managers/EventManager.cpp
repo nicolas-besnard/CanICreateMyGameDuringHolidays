@@ -23,6 +23,7 @@ void				EventManager::notify(ALLEGRO_EVENT &ev)
     OptionManager::getInstance().get<bool>("isRunning")->set(false);
   if (ev.type == ALLEGRO_EVENT_TIMER)
     {
+      SystemManager::getInstance().update(ev);
       OptionManager::getInstance().get<bool>("canDraw")->set(true);
     }
 }

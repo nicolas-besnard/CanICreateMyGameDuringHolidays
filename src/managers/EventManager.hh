@@ -9,6 +9,7 @@
 # include			"AObserver.hh"
 # include			"OptionManager.hpp"
 # include			"Context.hh"
+# include			"SystemManager.hpp"
 
 class				EventManager :
   public Singleton<EventManager>,

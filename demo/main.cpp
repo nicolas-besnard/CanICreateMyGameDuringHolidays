@@ -16,6 +16,7 @@
 #include			"components/Position.hh"
 
 #include			"systems/PositionSystem.hpp"
+#include			"managers/SystemManager.hpp"
 
 int				main(void)
 {
@@ -44,12 +45,9 @@ int				main(void)
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
   p.x = 5;
   p.y = 5;
-  // EntityManager::getInstance().addComponent<Position>(entity);
 
+  SystemManager::getInstance().addSystem<PositionSystem>();
   (void)(entity);
-
-  PositionSystem		ps;
-  ps.update();
 
   try
     {
