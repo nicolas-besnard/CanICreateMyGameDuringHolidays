@@ -11,19 +11,13 @@ class					MovementSystem : public System::Base
 public:
   MovementSystem(void)
     : System::Base()
-  {
-
-  }
+  {}
 
   virtual ~MovementSystem()
-  {
-
-  }
+  {}
 
   virtual void				init(void)
-  {
-
-  }
+  {}
 
   virtual void				update(const ALLEGRO_EVENT &)
   {
@@ -55,10 +49,13 @@ public:
       }
   }
 
+  virtual void				draw() const
+  {}
+
 protected:
 
 private:
-  MovementSystem					&operator=(const MovementSystem &other);
+  MovementSystem			&operator=(const MovementSystem &other);
   MovementSystem(const MovementSystem &other);
 };
 

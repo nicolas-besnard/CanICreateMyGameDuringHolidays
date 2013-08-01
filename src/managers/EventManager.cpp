@@ -84,15 +84,7 @@ void					EventManager::loop(void)
 	      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
 	    }
 	  frames_done++;
-
-	  // DEBUG !
-	  ShipSystem			ss;
-	  ss.draw();
-	  BoundingBoxSystem		bbs;
-	  bbs.draw();
-	  AggroCircleSystem		acs;
-	  acs.draw();
-
+	  SystemManager::getInstance().draw();
 	  al_flip_display();
 	  al_clear_to_color(al_map_rgb(0, 0, 0));
 	}

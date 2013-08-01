@@ -14,19 +14,13 @@ class					AggroCircleSystem : public System::Base
 public:
   AggroCircleSystem(void)
     : System::Base()
-  {
-
-  }
+  {}
 
   virtual ~AggroCircleSystem()
-  {
-
-  }
+  {}
 
   virtual void				init(void)
-  {
-
-  }
+  {}
 
   virtual void				update(const ALLEGRO_EVENT &)
   {
@@ -71,7 +65,7 @@ public:
       }
   }
 
-  void					draw(void) const
+  virtual void				draw(void) const
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<AggroCircle>();
 

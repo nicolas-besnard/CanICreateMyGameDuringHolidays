@@ -9,6 +9,7 @@ namespace				System
   {
     virtual void			init(void) = 0;
     virtual void			update(const ALLEGRO_EVENT &event) = 0;
+    virtual void			draw() const = 0;
   };
 }
 

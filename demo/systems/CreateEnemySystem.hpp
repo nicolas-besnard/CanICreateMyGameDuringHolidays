@@ -9,21 +9,15 @@ class					CreateEnemySystem : public System::Base
 public:
   CreateEnemySystem(void)
     : System::Base()
-  {
-
-  }
+  {}
 
   virtual ~CreateEnemySystem()
-  {
-
-  }
+  {}
 
   virtual void				init(void)
-  {
+  {}
 
-  }
-
-  virtual void				update(const ALLEGRO_EVENT &event)
+  virtual void				update(const ALLEGRO_EVENT &)
   {
     if ((rand() % 500) == 0)
       {
@@ -31,10 +25,11 @@ public:
       }
   }
 
-protected:
+  virtual void				draw(void) const
+  {}
 
 private:
-  CreateEnemySystem					&operator=(const CreateEnemySystem &other);
+  CreateEnemySystem			&operator=(const CreateEnemySystem &other);
   CreateEnemySystem(const CreateEnemySystem &other);
 };
 

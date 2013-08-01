@@ -12,19 +12,13 @@ class					BoundingBoxSystem : public System::Base
 public:
   BoundingBoxSystem(void)
     : System::Base()
-  {
-
-  }
+  {}
 
   virtual ~BoundingBoxSystem()
-  {
-
-  }
+  {}
 
   virtual void				init(void)
-  {
-
-  }
+  {}
 
   virtual void				update(const ALLEGRO_EVENT &)
   {
@@ -66,7 +60,7 @@ public:
       }
   }
 
-  void					draw(void)
+  virtual void				draw(void) const
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<BoundingBox>();
 

@@ -10,10 +10,6 @@
 # include				"Context.hh"
 # include				"SystemManager.hpp"
 
-# include				"systems/ShipSystem.hpp"
-# include				"systems/BoundingBoxSystem.hpp"
-# include				"systems/AggroCircleSystem.hpp"
-
 class					EventManager : public Singleton<EventManager>
 {
   friend class Singleton<EventManager>;

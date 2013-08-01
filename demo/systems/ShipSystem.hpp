@@ -19,13 +19,13 @@ public:
   virtual ~ShipSystem()
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
-  {}
-
   virtual void				init(void)
   {}
 
-  void					draw(void) const
+  virtual void				update(const ALLEGRO_EVENT &)
+  {}
+
+  virtual void				draw(void) const
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Ship>();
 
@@ -47,7 +47,7 @@ public:
 protected:
 
 private:
-  ShipSystem					&operator=(const ShipSystem &other);
+  ShipSystem				&operator=(const ShipSystem &other);
   ShipSystem(const ShipSystem &other);
 };
 

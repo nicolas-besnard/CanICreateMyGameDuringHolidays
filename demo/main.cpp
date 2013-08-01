@@ -76,11 +76,11 @@ int				main(void)
   Tag				&t = EntityManager::getInstance().addComponent<Tag>(entity);
   t.name = "Player";
 
-  SystemManager::getInstance().addSystem<ShipSystem>();
+  SystemManager::getInstance().addSystem<ShipSystem>(10, true);
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
-  SystemManager::getInstance().addSystem<BoundingBoxSystem>();
-  SystemManager::getInstance().addSystem<AggroCircleSystem>();
+  SystemManager::getInstance().addSystem<BoundingBoxSystem>(1, true);
+  SystemManager::getInstance().addSystem<AggroCircleSystem>(1, true);
   SystemManager::getInstance().addSystem<MovementSystem>();
   SystemManager::getInstance().addSystem<CreateEnemySystem>();
 

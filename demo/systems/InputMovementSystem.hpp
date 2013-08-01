@@ -16,19 +16,13 @@ class					InputMovementSystem : public System::Base
 public:
   InputMovementSystem(void)
     : System::Base()
-  {
-
-  }
+  {}
 
   virtual ~InputMovementSystem()
-  {
-
-  }
+  {}
 
   virtual void				init(void)
-  {
-
-  }
+  {}
 
   virtual void				update(const ALLEGRO_EVENT &)
   {
@@ -88,11 +82,13 @@ public:
       }
   }
 
+  virtual void				draw(void) const
+  {}
 
 protected:
 
 private:
-  InputMovementSystem					&operator=(const InputMovementSystem &other);
+  InputMovementSystem			&operator=(const InputMovementSystem &other);
   InputMovementSystem(const InputMovementSystem &other);
 };
 

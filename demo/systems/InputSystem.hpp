@@ -20,6 +20,14 @@ public:
   virtual ~InputSystem()
   {}
 
+  virtual void				init(void)
+  {
+    for (int i = ALLEGRO_KEY_A; i <= ALLEGRO_KEY_COMMAND; ++i)
+      {
+	keys_.insert(ActiveKeyPair(i, false));
+      }
+  }
+
   virtual void				update(const ALLEGRO_EVENT &event)
   {
     if (!isKeyEvent_(event))
@@ -36,13 +44,8 @@ public:
       }
   }
 
-  virtual void				init(void)
-  {
-    for (int i = ALLEGRO_KEY_A; i <= ALLEGRO_KEY_COMMAND; ++i)
-      {
-	keys_.insert(ActiveKeyPair(i, false));
-      }
-  }
+  virtual void				draw(void) const
+  {}
 
   bool					isKeyDown(int key)
   {
@@ -64,7 +67,7 @@ public:
 protected:
 
 private:
-  InputSystem			&operator=(const InputSystem &other);
+  InputSystem				&operator=(const InputSystem &other);
   InputSystem(const InputSystem &other);
 
   bool					isKeyEvent_(const ALLEGRO_EVENT &event)
