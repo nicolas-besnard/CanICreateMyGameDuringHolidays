@@ -7,6 +7,7 @@
 
 # include				"components/AggroCircleComponent.hpp"
 # include				"components/PositionComponent.hpp"
+# include				"components/TagComponent.hpp"
 
 class					AggroCircleSystem : public System::Base
 {
@@ -50,16 +51,15 @@ public:
 		    Entity			&otherEntity = *(*otherActualEntity);
 		    if (collide_(entity, otherEntity))
 		      {
-			Position		&p1 = EntityManager::getInstance().getComponent<Position>(entity);
-			Position		&p2 = EntityManager::getInstance().getComponent<Position>(otherEntity);
+			Tag			&t1 = EntityManager::getInstance().getComponent<Tag>(entity);
+			Tag			&t2 = EntityManager::getInstance().getComponent<Tag>(otherEntity);
 
-			int			dirX = p1.x - p2.x;
-			int			dirY = p1.y - p2.y;
-
-			float			hyp = sqrt(dirX * dirX + dirY * dirY);
-
-			p2.x += (dirX / hyp) / 4;
-			p2.y += (dirY / hyp) / 4;
+			if (t1.name == "Enemy" && t2.name == "Enemy")
+			  return ;
+			if (t1.name == "Player" && t2.name == "Enemy")
+			  moveEnemyToPlayer_(otherEntity, entity);
+			else if (t1.name == "Enemy" && t2.name == "Player")
+			  moveEnemyToPlayer_(entity, otherEntity);
 		      }
 		  }
 	      }
@@ -106,6 +106,24 @@ private:
     if (((dx * dx)  + (dy * dy)) < (radii * radii))
       return true;
     return false;
+  }
+
+  void					moveEnemyToPlayer_(Entity &enemyEntity, Entity &playerEntity)
+  {
+    Position				&playerPosition = EntityManager::getInstance().getComponent<Position>(playerEntity);
+    Position				&enemyPosition = EntityManager::getInstance().getComponent<Position>(enemyEntity);
+
+    float				dirX = playerPosition.x - enemyPosition.x;
+    float				dirY = playerPosition.y - enemyPosition.y;
+    float				hyp = sqrt(dirX * dirX + dirY * dirY);
+
+    if (hyp > 60)
+      {
+	if (((dirX / hyp) == 0) || ((dirY / hyp) == 0))
+	  return ;
+	enemyPosition.x += (dirX / hyp);
+	enemyPosition.y += (dirY / hyp);
+      }
   }
 };
 

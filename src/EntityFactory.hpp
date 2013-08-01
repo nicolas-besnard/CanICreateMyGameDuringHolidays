@@ -9,6 +9,7 @@
 # include				"components/PositionComponent.hpp"
 # include				"components/BoundingBoxComponent.hpp"
 # include				"components/AggroCircleComponent.hpp"
+# include				"components/TagComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
@@ -33,6 +34,10 @@ public:
     AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
     ac.radius = 200;
     ac.entitySize = s.size;
+
+    Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
+    t.name = "Enemy";
+
     return				entity;
   }
 

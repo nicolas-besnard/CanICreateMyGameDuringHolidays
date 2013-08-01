@@ -18,6 +18,7 @@
 #include			"components/InputMovementComponent.hpp"
 #include			"components/BoundingBoxComponent.hpp"
 #include			"components/AggroCircleComponent.hpp"
+#include			"components/TagComponent.hpp"
 
 #include			"systems/ShipSystem.hpp"
 #include			"systems/InputSystem.hpp"
@@ -26,6 +27,8 @@
 #include			"systems/AggroCircleSystem.hpp"
 
 #include			"managers/SystemManager.hpp"
+
+#include			"EntityFactory.hpp"
 
 int				main(void)
 {
@@ -69,6 +72,11 @@ int				main(void)
   AggroCircle			&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
   ac.radius = 100;
   ac.entitySize = s.size;
+
+  Tag				&t = EntityManager::getInstance().addComponent<Tag>(entity);
+  t.name = "Player";
+
+  EntityFactory::getInstance().createComet();
 
   SystemManager::getInstance().addSystem<ShipSystem>();
   SystemManager::getInstance().addSystem<InputSystem>();

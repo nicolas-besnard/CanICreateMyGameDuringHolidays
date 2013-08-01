@@ -65,11 +65,6 @@ void					EventManager::loop(void)
 	    {
 	      isRunning_ = false;
 	    }
-	  if ((event.keyboard.keycode == ALLEGRO_KEY_C))
-	    {
-	      std::cout << " -- Create Comet" << std::endl;
-	      EntityFactory::getInstance().createComet();
-	    }
 	}
       if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 	isRunning_ = false;

@@ -47,7 +47,7 @@ public:
 		  {
 		    Entity			&otherEntity = *(*otherActualEntity);
 		    if (collide_(entity, otherEntity))
-		      std::cout << "BOOM" << std::endl;
+		      return ;
 
 
 		  }
