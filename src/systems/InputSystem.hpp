@@ -53,6 +53,14 @@ public:
     return false;
   }
 
+  void					setOff(int key)
+  {
+    ActiveKeyMapIT			find = keys_.find(key);
+
+    if (find != keys_.end())
+      find->second = false;
+  }
+
 protected:
 
 private:

@@ -25,6 +25,8 @@
 #include			"systems/InputMovementSystem.hpp"
 #include			"systems/BoundingBoxSystem.hpp"
 #include			"systems/AggroCircleSystem.hpp"
+#include			"systems/MovementSystem.hpp"
+#include			"systems/CreateEnemySystem.hpp"
 
 #include			"managers/SystemManager.hpp"
 
@@ -64,25 +66,23 @@ int				main(void)
   m.keyDown = ALLEGRO_KEY_S;
   m.keyLeft = ALLEGRO_KEY_Q;
   m.keyRight = ALLEGRO_KEY_D;
+  m.keyShoot = ALLEGRO_KEY_SPACE;
+  m.keyMissile = ALLEGRO_KEY_A;
 
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
-  p.x = 0;
-  p.y = 0;
-
-  AggroCircle			&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
-  ac.radius = 100;
-  ac.entitySize = s.size;
+  p.x = 50;
+  p.y = 50;
 
   Tag				&t = EntityManager::getInstance().addComponent<Tag>(entity);
   t.name = "Player";
-
-  EntityFactory::getInstance().createComet();
 
   SystemManager::getInstance().addSystem<ShipSystem>();
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
   SystemManager::getInstance().addSystem<BoundingBoxSystem>();
   SystemManager::getInstance().addSystem<AggroCircleSystem>();
+  SystemManager::getInstance().addSystem<MovementSystem>();
+  SystemManager::getInstance().addSystem<CreateEnemySystem>();
 
   try
     {

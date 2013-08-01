@@ -31,6 +31,29 @@ public:
     return *e;
   }
 
+  void					deleteEntity(Entity &entity)
+  {
+    deleteEntityComponent(entity);
+    delete &entity;
+  }
+
+  void					deleteEntityComponent(Entity &entity)
+  {
+    MapComponentNameIT			actualComponent = listComponent_.begin();
+    MapComponentNameIT			lastComponent = listComponent_.end();
+
+    for (; actualComponent != lastComponent; ++actualComponent)
+      {
+	const char			*componentName = (*actualComponent).first;
+
+	MapEntityIT			find = listComponent_[componentName].find(&entity);
+
+	if (find != listComponent_[componentName].end())
+	  listComponent_[componentName].erase(find);
+
+      }
+  }
+
   template				<typename T>
   T					&addComponent(Entity &entity)
   {
@@ -55,6 +78,8 @@ public:
 
     if (c != listComponent_.end())
       {
+	if ((*c).second.size() == 0)
+	  return NULL;
 	VectorEntity			*ret = new VectorEntity;
 	MapEntityIT			actualEntity = (*c).second.begin();
 	MapEntityIT			lastEntity =  (*c).second.end();

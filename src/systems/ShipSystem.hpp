@@ -40,8 +40,8 @@ public:
 	    Ship			&s = EntityManager::getInstance().getComponent<Ship>(*(*actualEntity));
 	    al_draw_filled_rectangle(p.x, p.y, p.x + s.size, p.y + s.size, al_map_rgb(255, 0, 0));
 	  }
+	delete entities;
       }
-
   }
 
 protected:

@@ -5,6 +5,7 @@
 
 # include				"components/PositionComponent.hpp"
 # include				"components/BoundingBoxComponent.hpp"
+# include				"components/TagComponent.hpp"
 
 class					BoundingBoxSystem : public System::Base
 {
@@ -47,12 +48,21 @@ public:
 		  {
 		    Entity			&otherEntity = *(*otherActualEntity);
 		    if (collide_(entity, otherEntity))
-		      return ;
+		      {
+			Tag			&t1 = EntityManager::getInstance().getComponent<Tag>(entity);
+			Tag			&t2 = EntityManager::getInstance().getComponent<Tag>(otherEntity);
 
-
+			if (((t1.name == "Bullet" || t1.name == "Missile") && t2.name == "Enemy") || ((t2.name == "Bullet" || t2.name == "Missile") && t1.name == "Enemy"))
+			  {
+			    EntityManager::getInstance().deleteEntity(entity);
+			    EntityManager::getInstance().deleteEntity(otherEntity);
+			    return ;
+			  }
+		      }
 		  }
 	      }
 	  }
+	delete entities;
       }
   }
 
@@ -73,6 +83,7 @@ public:
 	    BoundingBox			&bb = EntityManager::getInstance().getComponent<BoundingBox>(entity);
 	    al_draw_rectangle(p.x, p.y, p.x + bb.sizeX, p.y + bb.sizeY, al_map_rgb(0, 255, 0), 1);
 	  }
+	delete entities;
       }
   }
 
@@ -92,11 +103,6 @@ private:
     if ( (abs(p1.x - p2.x) * 2 < (bb1.sizeX + bb2.sizeX)) &&
     	 (abs(p1.y - p2.y) * 2 < (bb1.sizeY + bb2.sizeY))
     	 )
-    // if ( ((p1.x + bb1.sizeX) >= p2.x) &&
-    // 	 (p1.x <= (p2.x + bb2.sizeX)) &&
-    // 	 ((p1.y + bb1.sizeY) >= p2.y) &&
-    // 	 (p1.y <= (p2.y + bb2.sizeY))
-    // 	 )
       return true;
     return false;
   }

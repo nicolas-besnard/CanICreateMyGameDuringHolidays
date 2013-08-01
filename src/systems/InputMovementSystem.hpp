@@ -9,6 +9,8 @@
 
 # include				"managers/EntityManager.hh"
 
+# include				"EntityFactory.hpp"
+
 class					InputMovementSystem : public System::Base
 {
 public:
@@ -66,12 +68,23 @@ public:
 		  {
 		    p.x += 1;
 		  }
+		if (input->isKeyDown(m.keyShoot))
+		  {
+		    EntityFactory::getInstance().createBullet(entity);
+		    input->setOff(m.keyShoot);
+		  }
+		if (input->isKeyDown(m.keyMissile))
+		  {
+		    EntityFactory::getInstance().createMissile(entity);
+		    input->setOff(m.keyMissile);
+		  }
 	      }
 	    else
 	      {
 		std::cout << "OMG ERROR" << std::endl;
 	      }
 	  }
+	delete entities;
       }
   }
 

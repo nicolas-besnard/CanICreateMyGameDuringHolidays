@@ -10,22 +10,23 @@
 # include				"components/BoundingBoxComponent.hpp"
 # include				"components/AggroCircleComponent.hpp"
 # include				"components/TagComponent.hpp"
+# include				"components/SpeedComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
   friend class Singleton<EntityFactory>;
 
 public:
-  Entity				&createComet(void) const
+  Entity				&createComet(float posX, float posY) const
   {
-    Entity				&entity = EntityManager::getInstance().getNewEntity();
+    Entity				&entity = getEntity_();
 
     Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
     s.size = 50;
 
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-    p.x = 600;
-    p.y = 400;
+    p.x = posX;
+    p.y = posY;
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 50;
@@ -35,8 +36,71 @@ public:
     ac.radius = 200;
     ac.entitySize = s.size;
 
+    Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
+    speed.x = -1;
+    speed.y = 0;
+
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Enemy";
+
+    return				entity;
+  }
+
+
+  Entity				&createBullet(Entity &parent) const
+  {
+    Entity				&entity = getEntity_();
+
+    Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
+    s.size = 10;
+
+    Position				&parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
+    Ship				&parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
+    p.x = parentPosition.x + (parentShip.size / 2);
+    p.y = parentPosition.y + (parentShip.size / 2);
+
+    BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
+    bb.sizeX = 10;
+    bb.sizeY = 10;
+
+    Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
+    speed.x = 1;
+    speed.y = 0;
+
+    Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
+    t.name = "Bullet";
+
+    return				entity;
+  }
+
+  Entity				&createMissile(Entity &parent) const
+  {
+    Entity				&entity = getEntity_();
+
+    Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
+    s.size = 10;
+
+    Position				&parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
+    Ship				&parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
+    p.x = parentPosition.x + (parentShip.size / 2);
+    p.y = parentPosition.y + (parentShip.size / 2);
+
+    BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
+    bb.sizeX = 10;
+    bb.sizeY = 10;
+
+    Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
+    speed.x = 1;
+    speed.y = 0;
+
+    AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
+    ac.radius = 50;
+    ac.entitySize = s.size;
+
+    Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
+    t.name = "Missile";
 
     return				entity;
   }
@@ -55,6 +119,11 @@ private:
   }
   EntityFactory					&operator=(const EntityFactory &other);
   EntityFactory(const EntityFactory &other);
+
+  Entity				&getEntity_(void) const
+  {
+    return EntityManager::getInstance().getNewEntity();
+  }
 };
 
 #endif					/* !ENTITYFACTORY_HPP_ */

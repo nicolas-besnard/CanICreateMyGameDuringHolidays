@@ -36,7 +36,6 @@ public:
       {
 	EntityManager::VectorEntityIT	actualEntity = entities->begin();
 	EntityManager::VectorEntityIT	lastEntity = entities->end();
-
 	for (; actualEntity != lastEntity; ++actualEntity)
 	  {
 	    Entity			&entity = *(*actualEntity);
@@ -48,22 +47,27 @@ public:
 	      {
 		if (otherActualEntity != actualEntity)
 		  {
-		    Entity			&otherEntity = *(*otherActualEntity);
+		    Entity		&otherEntity = *(*otherActualEntity);
+		    Tag			&t1 = EntityManager::getInstance().getComponent<Tag>(entity);
+		    Tag			&t2 = EntityManager::getInstance().getComponent<Tag>(otherEntity);
+
+		    if (t1.name == t2.name)
+		      continue;
 		    if (collide_(entity, otherEntity))
 		      {
-			Tag			&t1 = EntityManager::getInstance().getComponent<Tag>(entity);
-			Tag			&t2 = EntityManager::getInstance().getComponent<Tag>(otherEntity);
-
-			if (t1.name == "Enemy" && t2.name == "Enemy")
-			  return ;
 			if (t1.name == "Player" && t2.name == "Enemy")
 			  moveEnemyToPlayer_(otherEntity, entity);
 			else if (t1.name == "Enemy" && t2.name == "Player")
 			  moveEnemyToPlayer_(entity, otherEntity);
+			if (t1.name == "Missile" && t2.name == "Enemy")
+			  moveMissileToEnemy_(entity, otherEntity);
+			else if (t1.name == "Enemy" && t2.name == "Missile")
+			  moveMissileToEnemy_(otherEntity, entity);
 		      }
 		  }
 	      }
 	  }
+	delete entities;
       }
   }
 
@@ -84,6 +88,7 @@ public:
 	    AggroCircle			&ac = EntityManager::getInstance().getComponent<AggroCircle>(entity);
 	    al_draw_circle(p.x + (ac.entitySize / 2), p.y + (ac.entitySize / 2), ac.radius, al_map_rgb(0, 255, 0), 1);
 	  }
+	delete entities;
       }
   }
 
@@ -124,6 +129,21 @@ private:
 	enemyPosition.x += (dirX / hyp);
 	enemyPosition.y += (dirY / hyp);
       }
+  }
+
+  void					moveMissileToEnemy_(Entity &enemyEntity, Entity &playerEntity)
+  {
+    Position				&playerPosition = EntityManager::getInstance().getComponent<Position>(playerEntity);
+    Position				&enemyPosition = EntityManager::getInstance().getComponent<Position>(enemyEntity);
+
+    float				dirX = playerPosition.x - enemyPosition.x;
+    float				dirY = playerPosition.y - enemyPosition.y;
+    float				hyp = sqrt(dirX * dirX + dirY * dirY);
+
+    if (((dirX / hyp) == 0) || ((dirY / hyp) == 0))
+      return ;
+    enemyPosition.x += (dirX / hyp);
+    enemyPosition.y += (dirY / hyp);
   }
 };
 
