@@ -14,7 +14,8 @@ public:
   {
 
   }
-  ~BoundingBoxSystem()
+
+  virtual ~BoundingBoxSystem()
   {
 
   }

@@ -12,6 +12,7 @@
 
 # include				"systems/ShipSystem.hpp"
 # include				"systems/BoundingBoxSystem.hpp"
+# include				"systems/AggroCircleSystem.hpp"
 # include				"EntityFactory.hpp"
 
 class					EventManager : public Singleton<EventManager>

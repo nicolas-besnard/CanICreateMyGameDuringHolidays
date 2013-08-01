@@ -17,11 +17,13 @@
 #include			"components/ShipComponent.hpp"
 #include			"components/InputMovementComponent.hpp"
 #include			"components/BoundingBoxComponent.hpp"
+#include			"components/AggroCircleComponent.hpp"
 
 #include			"systems/ShipSystem.hpp"
 #include			"systems/InputSystem.hpp"
 #include			"systems/InputMovementSystem.hpp"
 #include			"systems/BoundingBoxSystem.hpp"
+#include			"systems/AggroCircleSystem.hpp"
 
 #include			"managers/SystemManager.hpp"
 
@@ -64,10 +66,15 @@ int				main(void)
   p.x = 0;
   p.y = 0;
 
+  AggroCircle			&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
+  ac.radius = 100;
+  ac.entitySize = s.size;
+
   SystemManager::getInstance().addSystem<ShipSystem>();
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
   SystemManager::getInstance().addSystem<BoundingBoxSystem>();
+  SystemManager::getInstance().addSystem<AggroCircleSystem>();
 
   try
     {

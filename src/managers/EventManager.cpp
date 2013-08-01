@@ -95,6 +95,8 @@ void					EventManager::loop(void)
 	  ss.draw();
 	  BoundingBoxSystem		bbs;
 	  bbs.draw();
+	  AggroCircleSystem		acs;
+	  acs.draw();
 
 	  al_flip_display();
 	  al_clear_to_color(al_map_rgb(0, 0, 0));

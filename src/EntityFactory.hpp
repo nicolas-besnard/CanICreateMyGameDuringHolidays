@@ -8,6 +8,7 @@
 # include				"components/ShipComponent.hpp"
 # include				"components/PositionComponent.hpp"
 # include				"components/BoundingBoxComponent.hpp"
+# include				"components/AggroCircleComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
@@ -22,13 +23,16 @@ public:
     s.size = 50;
 
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-    p.x = 200;
-    p.y = 200;
+    p.x = 600;
+    p.y = 400;
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 50;
     bb.sizeY = 50;
 
+    AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
+    ac.radius = 200;
+    ac.entitySize = s.size;
     return				entity;
   }
 
