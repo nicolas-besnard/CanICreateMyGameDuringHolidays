@@ -1,6 +1,8 @@
 #ifndef					AGGROCIRCLESYSTEM_HPP_
 # define				AGGROCIRCLESYSTEM_HPP_
 
+# include				<cmath>
+
 # include				"systems/Base.hpp"
 
 # include				"components/AggroCircleComponent.hpp"
@@ -47,7 +49,18 @@ public:
 		  {
 		    Entity			&otherEntity = *(*otherActualEntity);
 		    if (collide_(entity, otherEntity))
-		      std::cout << "AGGRO" << std::endl;
+		      {
+			Position		&p1 = EntityManager::getInstance().getComponent<Position>(entity);
+			Position		&p2 = EntityManager::getInstance().getComponent<Position>(otherEntity);
+
+			int			dirX = p1.x - p2.x;
+			int			dirY = p1.y - p2.y;
+
+			float			hyp = sqrt(dirX * dirX + dirY * dirY);
+
+			p2.x += (dirX / hyp) / 4;
+			p2.y += (dirY / hyp) / 4;
+		      }
 		  }
 	      }
 	  }
