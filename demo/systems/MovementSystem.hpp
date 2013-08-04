@@ -19,7 +19,7 @@ public:
   virtual void				init(void)
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
+  virtual void				update(double dt, const ALLEGRO_EVENT &)
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Speed>();
 
@@ -33,8 +33,8 @@ public:
 	    Speed			&s = EntityManager::getInstance().getComponent<Speed>(entity);
 	    Position			&p = EntityManager::getInstance().getComponent<Position>(entity);
 
-	    p.x += s.x;
-	    p.y += s.y;
+	    p.x += s.x * dt;
+	    p.y += s.y * dt;
 
 	    if (p.x > 800)
 	      {

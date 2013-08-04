@@ -20,7 +20,7 @@ public:
   virtual void				init(void)
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
+  virtual void				update(double, const ALLEGRO_EVENT &)
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<BoundingBox>();
 

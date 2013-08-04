@@ -50,14 +50,14 @@ void					EventManager::loop(void)
 {
   static double fps = 0;
   static double frames_done = 0;
-  static double old_time = al_get_time();
+  static double old_timeFPS = al_get_time();
 
   while (isRunning_)
     {
       ALLEGRO_EVENT			event;
 
       al_wait_for_event(eventQueue_, &event);
-      SystemManager::getInstance().update(event);
+      SystemManager::getInstance().update(al_get_time(), event);
       canDraw_ = false;
       if (event.type == ALLEGRO_EVENT_KEY_DOWN)
 	{
@@ -76,12 +76,12 @@ void					EventManager::loop(void)
 	{
 	  // FPS COUNT
 	  double time = al_get_time();
-	  if(time - old_time >= 1.0)
+	  if(time - old_timeFPS >= 1.0)
 	    {
-	      fps = frames_done / (time - old_time);
+	      fps = frames_done / (time - old_timeFPS);
 	      frames_done = 0;
-	      old_time = time;
-	      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
+	      old_timeFPS = time;
+	      std::cout << "FPS : " << fps << " || TIME : " << old_timeFPS << std::endl;
 	    }
 	  frames_done++;
 	  SystemManager::getInstance().draw();

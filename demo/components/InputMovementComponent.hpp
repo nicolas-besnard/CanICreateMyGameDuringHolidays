@@ -11,6 +11,8 @@ struct					InputMovement : public Component::Base
   int					keyRight;
   int					keyShoot;
   int					keyMissile;
+  float					x;
+  float					y;
 };
 
 #endif					/* !INPUTMOVEMENTCOMPONENT_HPP_ */

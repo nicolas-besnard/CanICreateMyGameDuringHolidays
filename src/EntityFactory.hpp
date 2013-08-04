@@ -37,7 +37,7 @@ public:
     ac.entitySize = s.size;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = -1;
+    speed.x = -500;
     speed.y = 0;
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
@@ -65,7 +65,7 @@ public:
     bb.sizeY = 10;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = 1;
+    speed.x = 400;
     speed.y = 0;
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
@@ -92,7 +92,7 @@ public:
     bb.sizeY = 10;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = 1;
+    speed.x = 300;
     speed.y = 0;
 
     AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);

@@ -19,6 +19,7 @@
 #include			"components/BoundingBoxComponent.hpp"
 #include			"components/AggroCircleComponent.hpp"
 #include			"components/TagComponent.hpp"
+#include			"components/SpeedComponent.hpp"
 
 #include			"systems/ShipSystem.hpp"
 #include			"systems/InputSystem.hpp"
@@ -68,6 +69,8 @@ int				main(void)
   m.keyRight = ALLEGRO_KEY_D;
   m.keyShoot = ALLEGRO_KEY_SPACE;
   m.keyMissile = ALLEGRO_KEY_A;
+  m.x = 300;
+  m.y = 300;
 
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
   p.x = 50;

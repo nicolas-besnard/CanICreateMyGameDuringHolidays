@@ -17,7 +17,7 @@ public:
   virtual void				init(void)
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
+  virtual void				update(double, const ALLEGRO_EVENT &)
   {
     if ((rand() % 500) == 0)
       {

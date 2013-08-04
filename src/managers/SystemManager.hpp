@@ -54,15 +54,17 @@ public:
     return NULL;
   }
 
-  void					update(const ALLEGRO_EVENT &event)
+  void					update(double dt, const ALLEGRO_EVENT &event)
   {
+    static double			oldTime = dt;
     MapSystemIT				actualSystem = systems_.begin();
     MapSystemIT				lastSystem = systems_.end();
 
     for (; actualSystem != lastSystem; ++actualSystem)
       {
-	(*actualSystem).second->update(event);
+	(*actualSystem).second->update(dt - oldTime, event);
       }
+    oldTime = dt;
   }
 
   void					draw(void) const

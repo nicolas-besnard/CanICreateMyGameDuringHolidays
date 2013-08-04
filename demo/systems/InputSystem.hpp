@@ -28,7 +28,7 @@ public:
       }
   }
 
-  virtual void				update(const ALLEGRO_EVENT &event)
+  virtual void				update(double, const ALLEGRO_EVENT &event)
   {
     if (!isKeyEvent_(event))
       return ;

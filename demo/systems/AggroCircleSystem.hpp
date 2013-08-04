@@ -8,6 +8,7 @@
 # include				"components/AggroCircleComponent.hpp"
 # include				"components/PositionComponent.hpp"
 # include				"components/TagComponent.hpp"
+# include				"components/SpeedComponent.hpp"
 
 class					AggroCircleSystem : public System::Base
 {
@@ -22,7 +23,7 @@ public:
   virtual void				init(void)
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
+  virtual void				update(double dt, const ALLEGRO_EVENT &)
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<AggroCircle>();
 
@@ -50,13 +51,13 @@ public:
 		    if (collide_(entity, otherEntity))
 		      {
 			if (t1.name == "Player" && t2.name == "Enemy")
-			  moveEnemyToPlayer_(otherEntity, entity);
+			  moveEnemyToPlayer_(otherEntity, entity, dt);
 			else if (t1.name == "Enemy" && t2.name == "Player")
-			  moveEnemyToPlayer_(entity, otherEntity);
+			  moveEnemyToPlayer_(entity, otherEntity, dt);
 			if (t1.name == "Missile" && t2.name == "Enemy")
-			  moveMissileToEnemy_(entity, otherEntity);
+			  moveMissileToEnemy_(entity, otherEntity, dt);
 			else if (t1.name == "Enemy" && t2.name == "Missile")
-			  moveMissileToEnemy_(otherEntity, entity);
+			  moveMissileToEnemy_(otherEntity, entity, dt);
 		      }
 		  }
 	      }
@@ -107,7 +108,7 @@ private:
     return false;
   }
 
-  void					moveEnemyToPlayer_(Entity &enemyEntity, Entity &playerEntity)
+  void					moveEnemyToPlayer_(Entity &enemyEntity, Entity &playerEntity, double dt)
   {
     Position				&playerPosition = EntityManager::getInstance().getComponent<Position>(playerEntity);
     Position				&enemyPosition = EntityManager::getInstance().getComponent<Position>(enemyEntity);
@@ -120,24 +121,25 @@ private:
       {
 	if (((dirX / hyp) == 0) || ((dirY / hyp) == 0))
 	  return ;
-	enemyPosition.x += (dirX / hyp);
-	enemyPosition.y += (dirY / hyp);
+	enemyPosition.x += (dirX / hyp) * dt;
+	enemyPosition.y += (dirY / hyp) * dt;
       }
   }
 
-  void					moveMissileToEnemy_(Entity &enemyEntity, Entity &playerEntity)
+  void					moveMissileToEnemy_(Entity &missileEntity, Entity &enemyEntity, double dt)
   {
-    Position				&playerPosition = EntityManager::getInstance().getComponent<Position>(playerEntity);
     Position				&enemyPosition = EntityManager::getInstance().getComponent<Position>(enemyEntity);
+    Position				&missilePosition = EntityManager::getInstance().getComponent<Position>(missileEntity);
+    Speed				&missileSpeed = EntityManager::getInstance().getComponent<Speed>(missileEntity);
 
-    float				dirX = playerPosition.x - enemyPosition.x;
-    float				dirY = playerPosition.y - enemyPosition.y;
+    float				dirX = enemyPosition.x - missilePosition.x;
+    float				dirY = enemyPosition.y - missilePosition.y;
     float				hyp = sqrt(dirX * dirX + dirY * dirY);
 
-    if (((dirX / hyp) == 0) || ((dirY / hyp) == 0))
+    if ((dirX / hyp) == 0 || (dirY / hyp) == 0)
       return ;
-    enemyPosition.x += (dirX / hyp);
-    enemyPosition.y += (dirY / hyp);
+    missilePosition.x += (dirX / hyp) * 1.5 * missileSpeed.x * dt;
+    missilePosition.y += (dirY / hyp) * 1.5 * missileSpeed.x * dt;
   }
 };
 

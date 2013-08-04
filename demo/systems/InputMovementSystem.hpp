@@ -24,7 +24,7 @@ public:
   virtual void				init(void)
   {}
 
-  virtual void				update(const ALLEGRO_EVENT &)
+  virtual void				update(double dt,const ALLEGRO_EVENT &)
   {
     EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<InputMovement>();
 
@@ -48,19 +48,19 @@ public:
 	      {
 		if (input->isKeyDown(m.keyUp))
 		  {
-		    p.y -= 1;
+		    p.y -= m.y * dt;
 		  }
 		if (input->isKeyDown(m.keyDown))
 		  {
-		    p.y += 1;
+		    p.y += m.y * dt;
 		  }
 		if (input->isKeyDown(m.keyLeft))
 		  {
-		    p.x -= 1;
+		    p.x -= m.x * dt;
 		  }
 		if (input->isKeyDown(m.keyRight))
 		  {
-		    p.x += 1;
+		    p.x += m.x * dt;
 		  }
 		if (input->isKeyDown(m.keyShoot))
 		  {
