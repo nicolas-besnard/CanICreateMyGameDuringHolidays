@@ -65,9 +65,9 @@ public:
   }
 
   template				<typename T>
-  T					&getComponent(Entity &entity)
+  T					*getComponent(Entity &entity)
   {
-    return (T &)(*listComponent_[typeid(T).name()][&entity]);
+    return (T *)(listComponent_[typeid(T).name()][&entity]);
   }
 
   template				<typename T>

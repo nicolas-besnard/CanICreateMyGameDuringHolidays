@@ -20,6 +20,7 @@
 #include			"components/AggroCircleComponent.hpp"
 #include			"components/TagComponent.hpp"
 #include			"components/SpeedComponent.hpp"
+#include			"components/OrientationComponent.hpp"
 
 #include			"systems/ShipSystem.hpp"
 #include			"systems/InputSystem.hpp"
@@ -78,6 +79,9 @@ int				main(void)
 
   Tag				&t = EntityManager::getInstance().addComponent<Tag>(entity);
   t.name = "Player";
+
+  Orientation			&o = EntityManager::getInstance().addComponent<Orientation>(entity);
+  o.radian = 0;
 
   SystemManager::getInstance().addSystem<ShipSystem>(10, true);
   SystemManager::getInstance().addSystem<InputSystem>();

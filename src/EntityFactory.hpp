@@ -1,6 +1,8 @@
 #ifndef					ENTITYFACTORY_HPP_
 # define				ENTITYFACTORY_HPP_
 
+# include				<cmath>
+
 # include				"Singleton.hpp"
 
 # include				"managers/EntityManager.hh"
@@ -11,6 +13,7 @@
 # include				"components/AggroCircleComponent.hpp"
 # include				"components/TagComponent.hpp"
 # include				"components/SpeedComponent.hpp"
+# include				"components/OrientationComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
@@ -54,11 +57,13 @@ public:
     Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
     s.size = 10;
 
-    Position				&parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
-    Ship				&parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Position				*parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
+    Ship				*parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Orientation				*parentOrientaion = EntityManager::getInstance().getComponent<Orientation>(parent);
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-    p.x = parentPosition.x + (parentShip.size / 2);
-    p.y = parentPosition.y + (parentShip.size / 2);
+
+    p.x = parentPosition->x + (parentShip->size / 2);
+    p.y = parentPosition->y + (parentShip->size / 2);
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 10;
@@ -66,10 +71,13 @@ public:
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
     speed.x = 400;
-    speed.y = 0;
+    speed.y = 400;
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Bullet";
+
+    Orientation				&o = EntityManager::getInstance().addComponent<Orientation>(entity);
+    o.radian = parentOrientaion->radian;
 
     return				entity;
   }
@@ -81,11 +89,12 @@ public:
     Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
     s.size = 10;
 
-    Position				&parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
-    Ship				&parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Position				*parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
+    Ship				*parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
+    Orientation				*parentOrientaion = EntityManager::getInstance().getComponent<Orientation>(parent);
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-    p.x = parentPosition.x + (parentShip.size / 2);
-    p.y = parentPosition.y + (parentShip.size / 2);
+    p.x = parentPosition->x + (parentShip->size / 2);
+    p.y = parentPosition->y + (parentShip->size / 2);
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 10;
@@ -93,7 +102,7 @@ public:
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
     speed.x = 300;
-    speed.y = 0;
+    speed.y = 300;
 
     AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
     ac.radius = 50;
@@ -101,6 +110,9 @@ public:
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Missile";
+
+    Orientation				&o = EntityManager::getInstance().addComponent<Orientation>(entity);
+    o.radian = parentOrientaion->radian;
 
     return				entity;
   }

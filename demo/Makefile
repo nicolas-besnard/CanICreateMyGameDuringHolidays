@@ -5,7 +5,7 @@ CXX		=	g++
 
 RM		=	rm -f
 
-CXXFLAGS	=	-W -Wextra -Wall
+CXXFLAGS	=	-W -Wextra -Wall -MMD
 CXXFLAGS	+=	-I../src/ -I../src/debug -I../src/utilities -I../src/managers -I../src/resources -I../src/loaders -I../src/entities -I../src/components/
 CXXFLAGS	+=	-I.
 
@@ -22,6 +22,8 @@ SRCS		=	$(wildcard $(SRCS_DIR)/*.cpp)		\
 
 OBJS		=	$(SRCS:.cpp=.o)
 
+DEPS		=	$(SRCS:.cpp=.d)
+
 ECHO		=	echo -e
 
 all		:	$(NAME)
@@ -31,7 +33,7 @@ $(NAME)		:	$(OBJS)
 			@$(ECHO) '\033[1;37;44m> Compiled {\033[4m$(NAME)}\033[0m'
 
 clean		:
-			-@$(RM) $(OBJS)
+			-@$(RM) $(OBJS) $(DEPS)
 			@$(ECHO) '\033[1;37;41m> Directory cleaned\033[0m'
 
 fclean		:	clean

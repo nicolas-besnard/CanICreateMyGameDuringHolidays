@@ -5,6 +5,7 @@
 
 # include				"components/SpeedComponent.hpp"
 # include				"components/PositionComponent.hpp"
+# include				"components/OrientationComponent.hpp"
 
 class					MovementSystem : public System::Base
 {
@@ -30,17 +31,29 @@ public:
 	for (; actualEntity != lastEntity; ++actualEntity)
 	  {
 	    Entity			&entity = *(*actualEntity);
-	    Speed			&s = EntityManager::getInstance().getComponent<Speed>(entity);
-	    Position			&p = EntityManager::getInstance().getComponent<Position>(entity);
+	    Speed			*s = EntityManager::getInstance().getComponent<Speed>(entity);
+	    Position			*p = EntityManager::getInstance().getComponent<Position>(entity);
+	    Orientation			*o = EntityManager::getInstance().getComponent<Orientation>(entity);
 
-	    p.x += s.x * dt;
-	    p.y += s.y * dt;
+	    if (!o)
+	      {
+		p->x += s->x * dt;
+		p->y += s->y * dt;
+	      }
+	    else
+	      {
+		double dirX = cos(o->radian);
+		double dirY = sin(o->radian);
 
-	    if (p.x > 800)
+		p->x += s->x * dirX * dt;
+		p->y += s->y * dirY * dt;
+	      }
+
+	    if (p->x > 800)
 	      {
 		EntityManager::getInstance().deleteEntity(entity);
 	      }
-	    if (p.x <= 0)
+	    if (p->x <= 0)
 	      {
 		EntityManager::getInstance().deleteEntity(entity);
 	      }
