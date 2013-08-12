@@ -36,28 +36,14 @@
 
 int				main(void)
 {
-  // srand(time(NULL));
-  // ALogger::setLogger(new LoggerConsole);
-  // Context&context = Context::getInstance();
+  srand(time(NULL));
+  ALogger::setLogger(new LoggerConsole);
 
-  // MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png");
-  // MediaManager::getInstance().addSearchPath("./assets/images/");
-
-  // try
-  //   {
-  //     ImagePointer tmp = ResourceManager::getInstance().get<Image>("github.png");
-  //   }
-  // catch (LoadingFailed &e)
-  //   {
-  //     ALogger::log(e.what());
-  //     exit (0);
-  //   }
   Context&context = Context::getInstance();
-  // FontManager::getInstance().addSearchPath("./assets/fonts/");
 
   Entity&entity = EntityManager::getInstance().getNewEntity();
   Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
-  s.size = 50;
+  s.size = 25;
 
   BoundingBox			&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
   bb.sizeX = s.size;
@@ -70,8 +56,6 @@ int				main(void)
   m.keyRight = ALLEGRO_KEY_D;
   m.keyShoot = ALLEGRO_KEY_SPACE;
   m.keyMissile = ALLEGRO_KEY_A;
-  m.x = 300;
-  m.y = 300;
 
   Position			&p = EntityManager::getInstance().addComponent<Position>(entity);
   p.x = 50;
@@ -83,20 +67,21 @@ int				main(void)
   Orientation			&o = EntityManager::getInstance().addComponent<Orientation>(entity);
   o.radian = 0;
 
+  Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
+  speed.value = 110;
+
   SystemManager::getInstance().addSystem<ShipSystem>(10, true);
   SystemManager::getInstance().addSystem<InputSystem>();
   SystemManager::getInstance().addSystem<InputMovementSystem>();
   SystemManager::getInstance().addSystem<BoundingBoxSystem>(1, true);
   SystemManager::getInstance().addSystem<AggroCircleSystem>(1, true);
   SystemManager::getInstance().addSystem<MovementSystem>();
-  SystemManager::getInstance().addSystem<CreateEnemySystem>();
+  // SystemManager::getInstance().addSystem<CreateEnemySystem>();
 
   try
     {
-      context.init(800, 600);
+      context.init(480, 720);
       EventManager::getInstance().init();
-      // FontManager::getInstance().initAddon();
-      // FontManager::getInstance().get("comics.ttf", 24);
       EventManager::getInstance().loop();
     }
   catch (ContextException &e)

@@ -40,8 +40,7 @@ public:
     ac.entitySize = s.size;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = -500;
-    speed.y = 0;
+    speed.value = 500;
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Enemy";
@@ -70,8 +69,7 @@ public:
     bb.sizeY = 10;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = 400;
-    speed.y = 400;
+    speed.value = 500;
 
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Bullet";
@@ -101,8 +99,7 @@ public:
     bb.sizeY = 10;
 
     Speed				&speed = EntityManager::getInstance().addComponent<Speed>(entity);
-    speed.x = 300;
-    speed.y = 300;
+    speed.value = 200;
 
     AggroCircle				&ac = EntityManager::getInstance().addComponent<AggroCircle>(entity);
     ac.radius = 50;

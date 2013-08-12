@@ -139,8 +139,8 @@ private:
 
     if ((dirX / hyp) == 0 || (dirY / hyp) == 0)
       return ;
-    missilePosition->x += (dirX / hyp) * 1.5 * missileSpeed->x * dt;
-    missilePosition->y += (dirY / hyp) * 1.5 * missileSpeed->x * dt;
+    missilePosition->x += (dirX / hyp) * 1.5 * missileSpeed->value * dt;
+    missilePosition->y += (dirY / hyp) * 1.5 * missileSpeed->value * dt;
   }
 };
 

@@ -3,6 +3,7 @@
 
 # include				"systems/Base.hpp"
 
+# include				"components/MovementComponent.hpp"
 # include				"components/SpeedComponent.hpp"
 # include				"components/PositionComponent.hpp"
 # include				"components/OrientationComponent.hpp"
@@ -22,7 +23,7 @@ public:
 
   virtual void				update(double dt, const ALLEGRO_EVENT &)
   {
-    EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Speed>();
+    EntityManager::VectorEntity		*entities = EntityManager::getInstance().getAllEntitiesPosessingComponentOfClass<Movement>();
 
     if (entities)
       {
@@ -37,16 +38,16 @@ public:
 
 	    if (!o)
 	      {
-		p->x += s->x * dt;
-		p->y += s->y * dt;
+		p->x += s->value * dt;
+		p->y += s->value * dt;
 	      }
 	    else
 	      {
 		double dirX = cos(o->radian);
 		double dirY = sin(o->radian);
 
-		p->x += s->x * dirX * dt;
-		p->y += s->y * dirY * dt;
+		p->x += s->value * dirX * dt;
+		p->y += s->value * dirY * dt;
 	      }
 
 	    if (p->x > 800)

@@ -5,8 +5,7 @@
 
 struct					Speed : public Component::Base
 {
-  float					x;
-  float					y;
+  float					value;
 };
 
 #endif					/* !SPEEDCOMPONENT_HPP_ */
