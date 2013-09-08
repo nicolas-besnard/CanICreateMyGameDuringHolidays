@@ -4,7 +4,6 @@
 # include				"systems/Base.hpp"
 
 # include				"components/MovementComponent.hpp"
-# include				"components/SpeedComponent.hpp"
 # include				"components/PositionComponent.hpp"
 # include				"components/OrientationComponent.hpp"
 
@@ -29,26 +28,15 @@ public:
       {
 	EntityManager::VectorEntityIT	actualEntity = entities->begin();
 	EntityManager::VectorEntityIT	lastEntity = entities->end();
+
 	for (; actualEntity != lastEntity; ++actualEntity)
 	  {
 	    Entity			&entity = *(*actualEntity);
-	    Speed			*s = EntityManager::getInstance().getComponent<Speed>(entity);
 	    Position			*p = EntityManager::getInstance().getComponent<Position>(entity);
-	    Orientation			*o = EntityManager::getInstance().getComponent<Orientation>(entity);
+	    Velocity			*v = EntityManager::getInstance().getComponent<Velocity>(entity);
 
-	    if (!o)
-	      {
-		p->x += s->value * dt;
-		p->y += s->value * dt;
-	      }
-	    else
-	      {
-		double dirX = cos(o->radian);
-		double dirY = sin(o->radian);
-
-		p->x += s->value * dirX * dt;
-		p->y += s->value * dirY * dt;
-	      }
+	    p->x += v->x * dt;
+	    p->y += v->y * dt;
 
 	    if (p->x > 800)
 	      {

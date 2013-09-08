@@ -25,7 +25,7 @@ void				Context::init(int width, int height)
   if (!al_init_primitives_addon())
     throw ContextException(__FILE__, __LINE__, "Can't init primtivies addon.");
   al_set_new_bitmap_flags(ALLEGRO_MIPMAP | ALLEGRO_MIN_LINEAR);
-  if (!al_create_display(width, height))
+  if (!(display_ = al_create_display(width, height)))
     throw ContextException(__FILE__, __LINE__, "Can't create display.");
   if (!al_install_keyboard())
     throw ContextException(__FILE__, __LINE__, "Can't install keyboard.");
@@ -33,5 +33,6 @@ void				Context::init(int width, int height)
     throw ContextException(__FILE__, __LINE__, "Can't install mouse.");
   if (!al_install_joystick())
     throw ContextException(__FILE__, __LINE__, "Can't install joystick.");
+
 }
 

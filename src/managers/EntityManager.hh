@@ -6,7 +6,11 @@
 
 # include				"Singleton.hpp"
 # include				"Entity.hpp"
+
 # include				"components/Base.hpp"
+# include				"components/MouseComponent.hpp"
+# include				"components/PositionComponent.hpp"
+# include				"components/TagComponent.hpp"
 
 class					EntityManager : public Singleton<EntityManager>
 {
@@ -24,10 +28,32 @@ public:
   typedef std::vector<Entity *>			VectorEntity;
   typedef VectorEntity::iterator		VectorEntityIT;
 
-public:
-  Entity				&getNewEntity()
+  Entity				*getMouseEntity(void) const
+  {
+    return mouseEntity_;
+  }
+
+  void					createMouseEntity(void)
+  {
+    if (!mouseEntity_)
+      {
+	Entity				&entity = getNewEntity();
+
+	EntityManager::getInstance().addComponent<Mouse>(entity);
+	Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
+	p.x = 0;
+	p.y = 0;
+
+	Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
+	t.name = "crosshair";
+	mouseEntity_ = &entity;
+      }
+  }
+
+  Entity				&getNewEntity(void)
   {
     Entity				*e = new Entity(idCounter_++);
+
     return *e;
   }
 
@@ -50,7 +76,6 @@ public:
 
 	if (find != listComponent_[componentName].end())
 	  listComponent_[componentName].erase(find);
-
       }
   }
 
@@ -95,7 +120,8 @@ public:
 
 private:
   EntityManager(void)
-    : idCounter_(0)
+    : idCounter_(0),
+      mouseEntity_(NULL)
   {}
 
   virtual ~EntityManager() {}
@@ -104,6 +130,7 @@ private:
 
   int					idCounter_;
   MapComponentName			listComponent_;
+  Entity				*mouseEntity_;
 };
 
 #endif					/* !ENTITYMANAGER_HH_ */

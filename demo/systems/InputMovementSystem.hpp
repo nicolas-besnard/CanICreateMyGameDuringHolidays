@@ -45,6 +45,7 @@ public:
 	    InputMovement		*m = EntityManager::getInstance().getComponent<InputMovement>(entity);
 	    Orientation			*o = EntityManager::getInstance().getComponent<Orientation>(entity);
 	    Speed			*s = EntityManager::getInstance().getComponent<Speed>(entity);
+
 	    (void)(o);
 	    // Get system handling input
 	    InputSystem			*input = SystemManager::getInstance().getSystem<InputSystem>();

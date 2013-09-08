@@ -14,12 +14,31 @@
 # include				"components/TagComponent.hpp"
 # include				"components/SpeedComponent.hpp"
 # include				"components/OrientationComponent.hpp"
+# include				"components/VelocityComponent.hpp"
+# include				"components/MovementComponent.hpp"
+# include				"components/MouseComponent.hpp"
+# include				"components/ImageComponent.hpp"
 
 class					EntityFactory : public Singleton<EntityFactory>
 {
   friend class Singleton<EntityFactory>;
 
 public:
+  Entity				&createCrosshair(void) const
+  {
+    Entity				&entity = getEntity_();
+
+    EntityManager::getInstance().addComponent<Mouse>(entity);
+    Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
+    p.x = 0;
+    p.y = 0;
+
+    Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
+    t.name = "crosshair";
+
+    return				entity;
+  }
+
   Entity				&createComet(float posX, float posY) const
   {
     Entity				&entity = getEntity_();
@@ -53,16 +72,16 @@ public:
   {
     Entity				&entity = getEntity_();
 
-    Ship				&s = EntityManager::getInstance().addComponent<Ship>(entity);
-    s.size = 10;
+    EntityManager::getInstance().addComponent<Movement>(entity);
+
+    Image				&image = EntityManager::getInstance().addComponent<Image>(entity);
+    image.isInit = false;
+    image.url = "./assets/images/missile.png";
 
     Position				*parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
-    Ship				*parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
-    Orientation				*parentOrientaion = EntityManager::getInstance().getComponent<Orientation>(parent);
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-
-    p.x = parentPosition->x + (parentShip->size / 2);
-    p.y = parentPosition->y + (parentShip->size / 2);
+    p.x = parentPosition->x + 10;
+    p.y = parentPosition->y + 10;
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 10;
@@ -74,8 +93,10 @@ public:
     Tag					&t = EntityManager::getInstance().addComponent<Tag>(entity);
     t.name = "Bullet";
 
-    Orientation				&o = EntityManager::getInstance().addComponent<Orientation>(entity);
-    o.radian = parentOrientaion->radian;
+    Orientation				*parentOrientation = EntityManager::getInstance().getComponent<Orientation>(parent);
+    Velocity				&v = EntityManager::getInstance().addComponent<Velocity>(entity);
+    v.x = cos(parentOrientation->radian - M_PI / 2) * speed.value;
+    v.y = sin(parentOrientation->radian - M_PI / 2) * speed.value;
 
     return				entity;
   }
@@ -88,11 +109,11 @@ public:
     s.size = 10;
 
     Position				*parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
-    Ship				*parentShip = EntityManager::getInstance().getComponent<Ship>(parent);
-    Orientation				*parentOrientaion = EntityManager::getInstance().getComponent<Orientation>(parent);
+    Orientation				*parentOrientation = EntityManager::getInstance().getComponent<Orientation>(parent);
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
-    p.x = parentPosition->x + (parentShip->size / 2);
-    p.y = parentPosition->y + (parentShip->size / 2);
+
+    p.x = parentPosition->x + 1;
+    p.y = parentPosition->y + 1;
 
     BoundingBox				&bb = EntityManager::getInstance().addComponent<BoundingBox>(entity);
     bb.sizeX = 10;
@@ -109,7 +130,10 @@ public:
     t.name = "Missile";
 
     Orientation				&o = EntityManager::getInstance().addComponent<Orientation>(entity);
-    o.radian = parentOrientaion->radian;
+    Velocity				&v = EntityManager::getInstance().addComponent<Velocity>(entity);
+
+    v.x = cos(parentOrientation->radian) * speed.value;
+    v.y = sin(parentOrientation->radian) * speed.value;
 
     return				entity;
   }

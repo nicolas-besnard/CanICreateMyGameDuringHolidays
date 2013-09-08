@@ -25,6 +25,8 @@ private:
   ~Context();
   Context 			&operator=(const Context &other);
   Context(const Context &other);
+
+  ALLEGRO_DISPLAY		*display_;
 };
 
 #endif				/* !CONTEXT_HH_ */
