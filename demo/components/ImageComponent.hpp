@@ -9,9 +9,8 @@
 
 struct					Image : public Component::Base
 {
-  bool					isInit;
-  std::string				url;
   ALLEGRO_BITMAP			*image;
+  float					radian;
 };
 
 #endif					/* !IMAGECOMPONENT_HPP_ */

@@ -45,20 +45,11 @@ public:
 	    Entity			*mouse = EntityManager::getInstance().getMouseEntity();
 	    Position			*mousePosition = EntityManager::getInstance().getComponent<Position>(*mouse);
 
-	    float			radian = atan2(mousePosition->y - (p->y + 24) , mousePosition->x - (p->x + 24)) + M_PI / 2;
+	    if (i->radian == 0)
+	      i->radian = atan2(mousePosition->y - (p->y + 24) , mousePosition->x - (p->x + 24)) + M_PI / 2;
 
-	    if (i->isInit == false)
-	      {
-		i->image = al_load_bitmap(i->url.c_str());
-
-		if (!i->image)
-		  {
-		    std::cout << "ERROR IMAGE" << std::endl;
-		    std::cout << "Load " << i->url.c_str() << std::endl;
-		    exit (0);
-		  }
-	      }
-	    al_draw_bitmap(i->image, p->x, p->y, 0);
+	    // al_draw_bitmap(i->image, p->x, p->y, 0);
+	    al_draw_rotated_bitmap(i->image, 96 / 2, 96 / 2, p->x, p->y, i->radian, 0);
 	  }
       }
   }

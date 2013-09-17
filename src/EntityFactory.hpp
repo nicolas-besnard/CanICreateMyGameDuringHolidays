@@ -6,6 +6,7 @@
 # include				"Singleton.hpp"
 
 # include				"managers/EntityManager.hh"
+# include				"managers/ImageManager.hpp"
 
 # include				"components/ShipComponent.hpp"
 # include				"components/PositionComponent.hpp"
@@ -75,8 +76,8 @@ public:
     EntityManager::getInstance().addComponent<Movement>(entity);
 
     Image				&image = EntityManager::getInstance().addComponent<Image>(entity);
-    image.isInit = false;
-    image.url = "./assets/images/missile.png";
+    image.image = ImageManager::getInstance().getImage("bullet");
+    image.radian = 0;
 
     Position				*parentPosition = EntityManager::getInstance().getComponent<Position>(parent);
     Position				&p = EntityManager::getInstance().addComponent<Position>(entity);
@@ -98,6 +99,7 @@ public:
     v.x = cos(parentOrientation->radian - M_PI / 2) * speed.value;
     v.y = sin(parentOrientation->radian - M_PI / 2) * speed.value;
 
+    std::cout << "BULLET !" << std::endl;
     return				entity;
   }
 

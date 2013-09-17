@@ -31,6 +31,7 @@
 #include			"systems/MouseSystem.hpp"
 
 #include			"managers/SystemManager.hpp"
+#include			"managers/ImageManager.hpp"
 
 #include			"EntityFactory.hpp"
 
@@ -94,6 +95,7 @@ int				main(void)
   try
     {
       context.init(480, 720);
+      ImageManager::getInstance().addImage("bullet", "assets/images/missile.png");
       EventManager::getInstance().init();
       EventManager::getInstance().loop();
     }
